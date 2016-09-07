@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Sep  6 22:42:29 2016
+
+@author: Zander
+"""
+
 import Edge
 
 class Graph:

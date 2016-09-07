@@ -8,7 +8,7 @@ Created on Mon Sep  5 15:16:42 2016
 from queue import Queue
 import IQueue
 
-class ZQueue(metaclass=IQueue):
+class ZQueue(IQueue):
     def __init__(self):
         self.ZQ = Queue()
     

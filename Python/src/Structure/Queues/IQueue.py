@@ -7,7 +7,7 @@ Created on Mon Sep  5 15:05:43 2016
 
 from abc import ABCMeta, abstractmethod
 
-class IQueue(metaclass=ABCMeta):
+class IQueue(ABCMeta):
     @abstractmethod    
     def HasNext(self):
         pass
