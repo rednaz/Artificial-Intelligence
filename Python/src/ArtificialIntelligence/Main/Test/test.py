@@ -9,8 +9,8 @@ Created on Wed Sep  7 18:33:51 2016
 
 import sys
 
-sys.path.append('C:\Projects\ArtificialIntelligence\Python\src\ArtificialIntelligence\Math\Graph')
-sys.path.append('C:\Projects\ArtificialIntelligence\Python\src\ArtificialIntelligence\Algorithms\Search')
+sys.path.append('D:\Projects\Artificial Intelligence\Python\src\ArtificialIntelligence\Math\Graph')
+sys.path.append('D:\Projects\Artificial Intelligence\Python\src\ArtificialIntelligence\Algorithms\Search')
 
 from Graph import Graph
 from Node import Node

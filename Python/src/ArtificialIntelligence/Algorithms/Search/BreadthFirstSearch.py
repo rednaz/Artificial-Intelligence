@@ -7,7 +7,7 @@ Created on Tue Sep  6 21:12:38 2016
 
 import sys
 
-sys.path.append('C:\Projects\ArtificialIntelligence\Python\src\ArtificialIntelligence\Structure\Queues')
+sys.path.append('D:\Projects\Artificial Intelligence\Python\src\ArtificialIntelligence\Structure\Queues')
 
 from AbstractSearch import AbstractSearch
 from ZQueue import ZQueue

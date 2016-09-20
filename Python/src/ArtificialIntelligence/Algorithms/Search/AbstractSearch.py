@@ -13,13 +13,14 @@ from Graph import Graph
 from Node import Node
 
 class AbstractSearch:
-    def  __init__(self, graph, queue, startNode):
+    def  __init__(self, graph, queue, startNode, goalNode):
         self.Graph = graph
         self.Queue = queue
         self.SearchTree = Graph()
         self.Visited = list()
         
         self.StartNode = startNode
+        self.GoalNode = goalNode
         self.Queue.Add(self.StartNode)
         self.Visited.append(self.StartNode)
         
@@ -29,6 +30,9 @@ class AbstractSearch:
             newNode = Node(next.Value)
             
             self.SearchTree.AddNode(newNode)
+            
+            if (next == self.GoalNode):
+                return self.SearchTree
             
             for edge in next.Edges:
                 if (edge.Node in self.Visited):
