@@ -14,9 +14,14 @@ class Graph:
     def AddNode(self, node):
         self.Nodes.add(node)
 
-    def AddDirectedEdge(self, startNode, endNode):
-        startNode.Edges.add(Edge(endNode))
+    def AddDirectedEdge(self, startNode, endNode, weight = 1):
+        startNode.Edges.add(Edge(endNode, weight))
 
-    def AddBiDirectedEdge(self, startNode, endNode):
-        self.AddDirectedEdge(startNode, endNode)
-        self.AddDirectedEdge(endNode, startNode)
+    def AddBiDirectedEdge(self, startNode, endNode, weight = 1):
+        self.AddDirectedEdge(startNode, endNode, weight)
+        self.AddDirectedEdge(endNode, startNode, weight)
+        
+    def Print(self):
+        for node in self.Nodes:
+            for edge in node.Edges:
+                print(node.Value + '->' + edge.Node.Value)

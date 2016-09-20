@@ -15,19 +15,36 @@ sys.path.append('C:\Projects\ArtificialIntelligence\Python\src\ArtificialIntelli
 from Graph import Graph
 from Node import Node
 from BreadthFirstSearch import BreadthFirstSearch 
+from DepthFirstSearch import DepthFirstSearch 
 
 graph = Graph()
 aNode = Node('A')
 bNode = Node('B')
+cNode = Node('C')
+dNode = Node('D')
 
 graph.AddNode(aNode)
 graph.AddNode(bNode)
+graph.AddNode(cNode)
+graph.AddNode(dNode)
 
 graph.AddBiDirectedEdge(aNode, bNode)
+graph.AddBiDirectedEdge(aNode, cNode)
+graph.AddBiDirectedEdge(bNode, dNode)
 
-bfs = BreadthFirstSearch(graph)
+bfs = BreadthFirstSearch(graph, aNode)
 
 bfs.Search()
+
+graph.Print()
+print()
 bfs.Print()
+
+print()
+
+dfs = DepthFirstSearch(graph, aNode)
+
+dfs.Search()
+dfs.Print()
 
 print('Stop')
