@@ -5,24 +5,37 @@ Created on Mon Sep 19 21:28:11 2016
 @author: Zander
 """
 
-from heapq import heapq
+import heapq
+import itertools
 from IQueue import IQueue
 
 class ZPriorityQueue(IQueue):
     def __init__(self):
-        self.ZPQ = heapq()
+        self.heap = []
+        self.values = {}
+        self.REMOVED = '<removed-task>'
+        self.counter = itertools.count()
     
     def HasNext(self):
-        return not self.ZPQ.empty()
+        return len(self.heap) > 0
     
     def GetNext(self):
-        return self.ZPQ.heappop()
+        heapq.heapify(self.heap)
+        while self.heap:
+            priority, count, item = heapq.heappop(self.heap)
+            if item is not self.REMOVED:
+                del self.values[item]
+                return item
     
     def Add(self, item):
-        self.ZPQ.heappush(item, 1)
+        self._Add_(item, 1)
         
-    def Add(self, item, priority):
-        if item in self.ZPQ.heap:
-            self.ZPQ.remove(item)
+    def _Add_(self, item, priority):
+        if item in self.values:
+            entry = self.entry_finder.pop(item)
+            entry[-1] = self.REMOVED
         
-        self.ZPQ.heappush(item, priority)
+        count = next(self.counter)
+        entry = [priority, count, item]
+        self.values[item] = entry
+        heapq.heappush(self.heap, entry)

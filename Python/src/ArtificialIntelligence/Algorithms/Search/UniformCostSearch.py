@@ -13,26 +13,32 @@ from AbstractSearch import AbstractSearch
 from ZPriorityQueue import ZPriorityQueue
 
 class UniformCostSearch(AbstractSearch):
-    def __init__(self, graph, startNode, goalNode):
-        super().__init__(graph, ZPriorityQueue(), startNode, goalNode)
+    def __init__(self, graph, startNode):
+        super().__init__(graph, ZPriorityQueue(), startNode)
 
         self.Weights = list()
         
         for item in graph.Nodes:
-            self.Weights.insert(WeightedItem(item, sys.maxint))
+            self.Weights.append(WeightedItem(item, (2^63-1)))
             
         next(weightedItem for weightedItem in self.Weights if weightedItem.Item == startNode).Weight = 0
         
     def Add(self, edge):
-        if (self.SearchTree.Nodes.count == 0):
+        if (len(self.SearchTree.Nodes) == 0):
             prevWeight = 0
         else:
-            prevNode = next(node for node in self.SearchTree if edge in node.Edges)
-            prevWeight = next(weightedItem for weightedItem in self.Weights if weightedItem.Item == prevNode).Weight
-            
+            for node in self.Graph.Nodes:
+                if edge in node.Edges:
+                    prevNode = node
+                    break
+            for weightedItem in self.Weights:
+                if weightedItem.Item == prevNode:
+                    prevWeight = weightedItem.Weight
+                    break
+              
         newWeight = edge.Weight + prevWeight
             
-        self.Queue.Add(edge.Node, newWeight)
+        self.Queue._Add_(edge.Node, newWeight)
         
         next(weightedItem for weightedItem in self.Weights if weightedItem.Item == edge.Node).Weight = newWeight
         
