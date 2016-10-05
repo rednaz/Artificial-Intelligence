@@ -7,7 +7,7 @@ Created on Mon Sep 19 21:17:45 2016
 
 import sys
 
-sys.path.append('D:\Projects\Artificial Intelligence\Python\src\ArtificialIntelligence\Structure\Queues')
+sys.path.append('C:\Projects\Artificial Intelligence\Python\src\ArtificialIntelligence\Structure\Queues')
 
 from AbstractSearch import AbstractSearch
 from ZPriorityQueue import ZPriorityQueue
@@ -36,11 +36,14 @@ class UniformCostSearch(AbstractSearch):
                     prevWeight = weightedItem.Weight
                     break
               
-        newWeight = edge.Weight + prevWeight
+        newWeight = self.CalculateWeight(edge, prevWeight)
             
         self.Queue._Add_(edge.Node, newWeight)
         
         next(weightedItem for weightedItem in self.Weights if weightedItem.Item == edge.Node).Weight = newWeight
+        
+    def CalculateWeight(self, edge, weight):
+        return edge.Weight + weight
         
 class WeightedItem:
     def __init__(self, item, weight):

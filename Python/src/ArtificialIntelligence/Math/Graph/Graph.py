@@ -24,4 +24,6 @@ class Graph:
     def Print(self):
         for node in self.Nodes:
             for edge in node.Edges:
-                print(node.Value + '->' + edge.Node.Value)
+                nodeValue = node.Value
+                edgeNodeValue = edge.Node.Value
+                print(str(nodeValue) + '->' + str(edgeNodeValue))
