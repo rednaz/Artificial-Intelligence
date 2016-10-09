@@ -9,13 +9,13 @@ from Edge import Edge
 
 class Graph:
     def __init__(self):
-        self.Nodes = set()
+        self.Nodes = list()
 
     def AddNode(self, node):
-        self.Nodes.add(node)
+        self.Nodes.append(node)
 
     def AddDirectedEdge(self, startNode, endNode, weight = 1):
-        startNode.Edges.add(Edge(endNode, weight))
+        startNode.Edges.append(Edge(endNode, weight))
 
     def AddBiDirectedEdge(self, startNode, endNode, weight = 1):
         self.AddDirectedEdge(startNode, endNode, weight)

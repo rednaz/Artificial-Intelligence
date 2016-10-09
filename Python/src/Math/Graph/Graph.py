@@ -9,7 +9,7 @@ import Edge
 
 class Graph:
     def __init__(self):
-        self.Nodes = list()
+        self.Nodes = []
 
     def AddNode(self, node):
         self.Nodes.Add(node)
