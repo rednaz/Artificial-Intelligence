@@ -2,15 +2,39 @@
 """
 Created on Tue Oct  4 20:34:52 2016
 
-@author: Zander
+@author: Zander, James, Mason
 """
+    
+class Node:
+    def __init__(self, value):
+        self.Value = value
+        self.Edges = list()
 
-import sys
+class Edge:
+    def __init__(self, node, weight=1):
+        self.Node = node
+        self.Weight = weight
 
-sys.path.append('D:\Projects\Artificial Intelligence\Python\src\ArtificialIntelligence\Math\Graph')
+class Graph:
+    def __init__(self):
+        self.Nodes = list()
 
-from Graph import Graph
-from Node import Node
+    def AddNode(self, node):
+        self.Nodes.append(node)
+
+    def AddDirectedEdge(self, startNode, endNode, weight = 1):
+        startNode.Edges.append(Edge(endNode, weight))
+
+    def AddBiDirectedEdge(self, startNode, endNode, weight = 1):
+        self.AddDirectedEdge(startNode, endNode, weight)
+        self.AddDirectedEdge(endNode, startNode, weight)
+        
+    def Print(self):
+        for node in self.Nodes:
+            for edge in node.Edges:
+                nodeValue = node.Value
+                edgeNodeValue = edge.Node.Value
+                print(str(nodeValue) + '->' + str(edgeNodeValue))
 
 def GraphBuilder(adjacencyMatrix):
     size = len(adjacencyMatrix)
@@ -30,6 +54,7 @@ def GraphBuilder(adjacencyMatrix):
     #graph.Print()
     
     return graph
+        
     
 def gcd(m, n):
 	if (m <=0 or n <= 0):
@@ -104,29 +129,11 @@ def PageRank(graph, iterations):
         
     return pageRank
     
-matrix = [[0 for x in range(6)] for y in range(6)]
+with open('data.txt') as file:
+    pageRankData = [[int(digit) for digit in line.strip()] for line in file]
 
-"""
-010000
-001111
-000001
-000010
-001000
-100000
-"""
-
-matrix[0][1] = 1
-matrix[1][2] = 1
-matrix[1][3] = 1
-matrix[1][4] = 1
-matrix[1][5] = 1
-matrix[2][5] = 1
-matrix[3][4] = 1
-matrix[4][2] = 1
-matrix[5][0] = 1
-
-graph = GraphBuilder(matrix)
-pageRank = PageRank(graph, 17)
+graph = GraphBuilder(pageRankData)
+pageRank = PageRank(graph, 100)
 
 print()
 
