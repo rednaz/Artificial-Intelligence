@@ -137,12 +137,12 @@ with open('data.txt') as file:
     pageRankData = [[int(digit) for digit in line.strip()] for line in file]
 
 graph = GraphBuilder(pageRankData)
-pageRank = PageRank(graph, 100)
+pageRank = PageRank(graph, 17)
 
 print()
 print("Calculated page ranks: ")
 count = 0
 
 for rank in pageRank:
-    print ("Page " + str(count) + ": "+ str(rank[0] / rank[1]))
+    print ("Page " + str(count) + ": " + str((rank[0]) / (rank[1])) + " or " + str(rank[0]) + "/" + str(rank[1]))
     count = count + 1
