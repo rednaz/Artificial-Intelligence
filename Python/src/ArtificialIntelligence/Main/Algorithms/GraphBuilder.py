@@ -87,42 +87,48 @@ def gcd(m, n):
 		b=(t-(q*b))
 	return (d)
     
-def PageRank(graph, iterations):
-    damping = 1
+def PageRank(graph, convergence):
+    damping = [85, 100]
     
     nodeLength = len(graph.Nodes)
     
     #pageRank = [[1 for x in range(nodeLength)] for y in range(2)]
     
-    while iterations > 0:        
+    running = True
+    
+    while running:        
         newPageRank = [[0 for x in range(2)] for y in range(nodeLength)]
-        
-        #for x in nodeLength:
-        #    if len(graph.Nodes[x].Edges) == 0:
-        #        dp = dp + (damping * (pageRank[x][0] / pageRank[x][0]) / nodeLength)
                 
         for x in range(nodeLength):            
-            newPageRank[x][0] = 1 - damping
-            newPageRank[x][1] = nodeLength
+            newPageRank[x][0] = damping[1] - damping[0]
+            newPageRank[x][1] = nodeLength * damping[1]
         
         for x in range(nodeLength):
             for edge in graph.Nodes[x].Edges:
                 index = graph.Nodes.index(edge.Node)
                 
                 #newPageRank[index] = newPageRank[index] + graph.Nodes[x].value/(len(edge.Node.Edges))
-                newPageRank[index][0] = ((graph.Nodes[x].Value[1] * len(graph.Nodes[x].Edges)) * newPageRank[index][0]) + (newPageRank[index][1] * graph.Nodes[x].Value[0])
-                newPageRank[index][1] = newPageRank[index][1] * (graph.Nodes[x].Value[1] * len(graph.Nodes[x].Edges))
+                newPageRank[index][0] = ((graph.Nodes[x].Value[1] * len(graph.Nodes[x].Edges)) * newPageRank[index][0] * damping[1]) + (newPageRank[index][1] * graph.Nodes[x].Value[0] * damping[0])
+                newPageRank[index][1] = newPageRank[index][1] * (graph.Nodes[x].Value[1] * len(graph.Nodes[x].Edges)) * damping[1]
                 
                 divisor = gcd(newPageRank[index][0], newPageRank[index][1])
                 
                 newPageRank[index][0] = newPageRank[index][0] / divisor
                 newPageRank[index][1] = newPageRank[index][1] / divisor
+               
+        running = False               
+               
+        for x in range(nodeLength):
+            newRank = newPageRank[x][0] / newPageRank[x][1]
+            oldRank = graph.Nodes[x].Value[0] / graph.Nodes[x].Value[1]
+            
+            if abs((newRank - oldRank) / ((newRank + oldRank) / 2)) > convergence:
+                running = True
+                break
                 
         for x in range(nodeLength):
             graph.Nodes[x].Value[0] = newPageRank[x][0]
             graph.Nodes[x].Value[1] = newPageRank[x][1]
-            
-        iterations = iterations - 1
         
     pageRank = [[0 for x in range(2)] for y in range(nodeLength)]
                 
@@ -137,7 +143,7 @@ with open('data.txt') as file:
     pageRankData = [[int(digit) for digit in line.strip()] for line in file]
 
 graph = GraphBuilder(pageRankData)
-pageRank = PageRank(graph, 17)
+pageRank = PageRank(graph, .01)
 
 print()
 print("Calculated page ranks: ")
