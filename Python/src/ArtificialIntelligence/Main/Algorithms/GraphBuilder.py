@@ -37,6 +37,7 @@ class Graph:
                 print(str(nodeValue) + '->' + str(edgeNodeValue))
 
 def GraphBuilder(adjacencyMatrix):
+    print("Building directed graph based on adjacency matrix")
     size = len(adjacencyMatrix)
     nodes = list()
     graph = Graph()
@@ -45,11 +46,13 @@ def GraphBuilder(adjacencyMatrix):
         newNode = Node([1, size])
         nodes.append(newNode)
         graph.AddNode(newNode)
+        print("Created Page " + str(x))
     
     for x in range(size):
         for y in range(size):
             if adjacencyMatrix[x][y] == 1:
                 graph.AddDirectedEdge(nodes[x], nodes[y])
+                print("Page " + str(x) + " links to Page " + str(y))
                 
     #graph.Print()
     
@@ -126,6 +129,7 @@ def PageRank(graph, iterations):
     for x in range(nodeLength):
         pageRank[x][0] = graph.Nodes[x].Value[0]
         pageRank[x][1] = graph.Nodes[x].Value[1]
+        #print("pageRank[x][0]: " + str(pageRank[x][0]) + "  [x][1]: " + str(pageRank[x][1]))
         
     return pageRank
     
@@ -136,6 +140,9 @@ graph = GraphBuilder(pageRankData)
 pageRank = PageRank(graph, 100)
 
 print()
+print("Calculated page ranks: ")
+count = 0
 
 for rank in pageRank:
-    print (rank[0] / rank[1])
+    print ("Page " + str(count) + ": "+ str(rank[0] / rank[1]))
+    count = count + 1
